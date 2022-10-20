@@ -12,7 +12,7 @@ type UsersBlockType = {
 
 
 export const UsersBlock: React.FC<UsersBlockType> = ({ users, setUserDetails, isChangedInput }) => {
-// console.log(isChangedInput);
+console.log(isChangedInput);
 
   let [activeUser, setActiveUser] = React.useState<SearchUserType | null>(null);
 
