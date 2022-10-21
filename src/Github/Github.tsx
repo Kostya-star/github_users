@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { SearchResultType, SearchUserType, UserType } from '../types/types';
+import { SearchUserType, UserType } from '../types/types';
 
 import s from './Github.module.css';
 import { SearchBlock } from './SearchBlock/SearchBlock';
@@ -9,25 +9,13 @@ import { UsersBlock } from './UsersBlock/UsersBlock';
 
 
 export const App = () => {
-  let [users, setUsers] = React.useState<SearchUserType[]>([]);
-  let [userDetails, setUserDetails] = React.useState<UserType | null>(null);
 
-  let [isChangedInput, setIsChanged] = React.useState(false)
-
-
+  const [isChangedInput, setIsChangedInput] = React.useState(false)
+  const [activeUser, setActiveUser] = React.useState<SearchUserType | null>(null);
 
   const [searchInput, setSearchInput] = React.useState('it-kamasutra');
-  // console.log('searchInput', searchInput);
 
-  React.useEffect(() => {
-    axios
-      .get<SearchResultType>(
-        `https://api.github.com/search/users?q=${searchInput}`,
-      )
-      .then((res) => setUsers(res.data.items));
-      // if (isChangedInput) setIsChanged(isChangedInput)
-      // else setIsChanged(!isChangedInput)
-  }, [searchInput]);
+
 
 
 
@@ -37,19 +25,22 @@ export const App = () => {
         <SearchBlock
           searchInput={searchInput}
           setSearchInput={(tempSearchInput: string) => setSearchInput(tempSearchInput)}
-          setIsChanged={(isChangedInput) => setIsChanged(isChangedInput)}
+          setIsChangedInput={(isChangedInput) => setIsChangedInput(isChangedInput)}
           isChangedInput={isChangedInput}
         />
 
-        <button onClick={() => setSearchInput('it-kamasutra')}> reset! </button>
-        
         <UsersBlock
-          users={users}
-          setUserDetails={setUserDetails}
+          searchInput={searchInput}
           isChangedInput={isChangedInput}
+          activeUser={activeUser}
+          // seconds={seconds}
+          // setSeconds={(seconds) => setSeconds(seconds)}
+          setActiveUser={setActiveUser}
         />
       </div>
-      <UserDetailsBlock userDetails={userDetails}/>
+      <UserDetailsBlock 
+        activeUser={activeUser} 
+      />
     </div>
   );
 };
