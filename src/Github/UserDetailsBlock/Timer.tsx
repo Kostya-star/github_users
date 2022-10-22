@@ -35,10 +35,8 @@ export const Timer: React.FC<TimerPropsType> = ({ seconds, activeUser, setSecond
         setSeconds(--seconds)
       }
       else if (seconds === 0) clearInterval(myInterval);
-    }, 300);
-    return () => {
-      clearInterval(myInterval);
-    };
+    }, 1000);
+    return () => {clearInterval(myInterval)};  
   }
 
 

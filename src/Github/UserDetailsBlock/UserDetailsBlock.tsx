@@ -13,7 +13,7 @@ export const UserDetailsBlock: React.FC<UserDetailsBlockType> = ({ activeUser })
   const [userDetails, setUserDetails] = React.useState<UserType | null>(null);
 
   let [seconds, setSeconds] = React.useState(10);
-  
+    
   
   React.useEffect(() => {
     if (!!activeUser) {
@@ -21,7 +21,9 @@ export const UserDetailsBlock: React.FC<UserDetailsBlockType> = ({ activeUser })
       .get<UserType>(
         `https://api.github.com/users/${activeUser.login}`,
         )
-        .then((res) => setUserDetails(res.data));
+        .then((res) => {
+          setUserDetails(res.data)
+        });
       }
     }, [activeUser]);
     
@@ -29,8 +31,9 @@ export const UserDetailsBlock: React.FC<UserDetailsBlockType> = ({ activeUser })
     <>
     <Timer 
       seconds={seconds}
+      activeUser={activeUser}
       setSeconds={(seconds: number) => setSeconds(seconds)} 
-      activeUser={activeUser}/>
+      />
     {
       seconds > 0 ? (
         <div className={s.userData}>
